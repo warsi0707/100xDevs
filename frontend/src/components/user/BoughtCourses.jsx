@@ -8,7 +8,7 @@ export default function Purchased() {
 
   const Courses =async()=>{
     try{
-      const response = await fetch("http://localhost:3000/api/user/courses",{
+      const response = await fetch("https://one00xdevs-be.onrender.com/api/user/courses",{
         credentials: "include"
       })
       const result = await response.json()
