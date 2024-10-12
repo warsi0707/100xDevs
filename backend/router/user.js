@@ -132,7 +132,7 @@ userRouter.get("/courses", userAuth, async (req, res) => {
                 message: "User not found, please login"
             })
         }
-        const result = user;
+        const result = user.purchased;
         res.json({
             message: "Your purchased course",
             purchased: result

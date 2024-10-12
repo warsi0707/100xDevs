@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import Footer from "../course/Footer";
 
 
 export default function Signup() {
@@ -52,23 +53,24 @@ export default function Signup() {
 
   return (
     <>
+    <div className="bg-black h-screen ">
   
       {message && (
-        <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto mt-5 rounded-2xl text-white text-center text-2xl">
+        <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto py-5 rounded-2xl text-white text-center text-xl">
           {message}
         </div>
       )}
 
       <div>
         {error && (
-          <div className="bg-red-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto mt-5 rounded-2xl text-white text-center text-2xl">
+          <div className="bg-red-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-2 mx-auto py-2 rounded-2xl text-white text-center text-xl">
             {error}
           </div>
         )}
       </div>
 
-      <div className="bg-purple-500 p-10 w-full  md:mx-auto md:w-[550px]  mt-5 ">
-        <div className="bg-white  rounded-2xl p-5">
+      <div className=" p-10 w-full  md:mx-auto md:w-[550px]   ">
+        <div className="bg-gray-300  rounded-2xl p-5">
           <h1 className="text-center text-2xl">Sign into your account</h1>
           <div>
             <form onSubmit={Signup}>
@@ -118,6 +120,8 @@ export default function Signup() {
           </div>
         </div>
       </div>
+      </div>
+      <Footer/>
     </>
   );
 }

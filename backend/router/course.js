@@ -6,11 +6,14 @@ const courseRouter = Router()
 courseRouter.get("/",async(req, res) =>{
     try{
         const allCourse = await Course.find({})
-        res.json({
+        return res.json({
             courses : allCourse
         })
     }catch(error){
-        error: error
+        res.status(404).json({
+            message: "Course not found",
+            error: error.message
+        })
     }
 })
 
@@ -21,11 +24,11 @@ courseRouter.get("/:id",async(req, res) =>{
             _id:id
        })
        if(!course){
-           res.json({
+           return res.json({
                message: "No data available with this id"
            })
        }
-       res.json({
+       return res.json({
            course : course
        })
     }catch(error){

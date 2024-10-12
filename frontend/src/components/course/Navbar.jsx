@@ -8,6 +8,7 @@ export default function Navbar() {
   const [menu, setMenu] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
+  const [username, setUsername] = useState("")
   
 
  
@@ -19,6 +20,8 @@ export default function Navbar() {
           });
           if(response.ok){
             setIsAuthenticated(true)
+            const result = await response.json()
+            setUsername(result.username)
           }else{
             setIsAuthenticated(false)
           }
@@ -46,6 +49,8 @@ export default function Navbar() {
       console.error("Logout failed ",error)
     }
   };
+
+
 
   const handleMenu = () => {
     setMenu(!menu);
@@ -83,8 +88,12 @@ export default function Navbar() {
               {isAuthenticated?  (
                 <>
                 <h1 className="transition delay-200 hover:underline  hover:text-blue-600">
-                <Link to="#">Your Courses</Link>
+                <h1>{username}</h1>
               </h1>
+                <h1 className="transition delay-200 hover:underline  hover:text-blue-600">
+                <Link to="/purchased">Your Courses</Link>
+              </h1>
+              
               <h1 className="transition delay-200 hover:underline  hover:text-blue-600">
                 <button onClick={Logout}>Logout</button>
               </h1> </>
@@ -116,6 +125,7 @@ export default function Navbar() {
               <>
             <button  onClick={Logout}>Logout</button>
             <Link to="">Your courses</Link>
+            <h1>{username}</h1>
             </>
           ): (
           <Link to="/signin">Login</Link>
