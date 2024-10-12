@@ -35,4 +35,4 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/100xDevs.git
+   git clone https://github.com/warsi0707/100xDevs
