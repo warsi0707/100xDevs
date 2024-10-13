@@ -58,7 +58,7 @@ userRouter.post("/signin", async (req, res) => {
             }, USER_JWT_SECRET)
             res.cookie("token", token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV == "production",
+                secure: process.env.NODE_ENV === "production",
                 maxAge: 24 * 60 * 60 * 1000,
                 sameSite: "strict",
                 
