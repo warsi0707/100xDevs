@@ -57,11 +57,11 @@ userRouter.post("/signin", async (req, res) => {
                 fullName: foundUser.fullName
             }, USER_JWT_SECRET)
             res.cookie("token", token, {
-                domain: "https://one00xdevs-be.onrender.com",
                 httpOnly: true,
+                secure: process.env.NODE_ENV == "production",
                 maxAge: 24 * 60 * 60 * 1000,
-                sameSite: "lax",
-                secure: true
+                sameSite: "strict",
+                
                 
             })
             res.json({
