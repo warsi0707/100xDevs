@@ -154,7 +154,11 @@ userRouter.get("/courses", userAuth, async (req, res) => {
 })
 
 userRouter.post("/logout", userAuth, async (req, res) => {
-    res.clearCookie("token")
+    res.clearCookie("refreshToken",{
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",  
+    })
     res.json({
         message: "Loged out"
     })
