@@ -15,9 +15,9 @@ export default function Footer() {
         <div className='text-center mb-12 space-y-10'>
             <h1 className='text-2xl '>get in touch</h1>
             <div className='flex text-2xl gap-3 md:gap-5 sm:text-4xl md:text-4xl'>
-              <a href=""><FaInstagram/></a>
-                <a href=""><CiLinkedin/></a>
-                <a href=""><CiTwitter/></a>
+              <a href="" className='hover:bg-red-700 rounded-xl'><FaInstagram/></a>
+                <a href=""className='hover:bg-red-700 rounded-xl' ><CiLinkedin/></a>
+                <a href="" className='hover:bg-red-700 rounded-xl'><CiTwitter/></a>
             </div>
         </div>
 

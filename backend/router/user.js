@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { User, Course } = require("../database/db");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
-const { USER_JWT_SECRET,  } = require("../config")
+const { USER_JWT_SECRET,REFRESH_JWT_TOKEN  } = require("../config")
 const { userAuth } = require("../middleware/authentication")
 
 const userRouter = Router()
@@ -56,19 +56,12 @@ userRouter.post("/signin", async (req, res) => {
                 userId: foundUser._id,
                 fullName: foundUser.fullName
             }, USER_JWT_SECRET,{expiresIn: '1d'})
-            // const refreshToken = jwt.sign({
-            //     username: foundUser.username,
-            //     email: foundUser.email,
-            //     userId: foundUser._id,
-            //     fullName: foundUser.fullName
-            // },refreshToken)
+
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: 24 * 60 * 60 * 1000,
-                sameSite: "none",
-                
-                
+                sameSite: "strict",   
             })
             res.json({
                 message: `${username} sign in,`,

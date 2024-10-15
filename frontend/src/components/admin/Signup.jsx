@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Footer from "../course/Footer";
-import { redirect } from "react-router-dom";
+
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -15,6 +15,8 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+ 
 
   const Signup = async (e) => {
     e.preventDefault();
@@ -40,7 +42,7 @@ export default function Signup() {
           setError("");
         }, 2000);
         setTimeout(() => {
-          navigate("/signup",{state: {message: "Error"}});
+          navigate("/signup");
         }, 3000);
        
       }else{
@@ -51,7 +53,7 @@ export default function Signup() {
       setError("");
       setMessage(result.message)
       setTimeout(() => {
-        navigate("/signin");
+        navigate("/signin",);
       }, 3000);
     }
     } catch (err) {

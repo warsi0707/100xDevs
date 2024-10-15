@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from '../course/Footer';
 
 
@@ -12,7 +12,6 @@ export default function Signin() {
   const [password, setPassword] = useState("")
   const [message, setMessage] = useState("")
   const [error, setError] = useState("")
-
   const navigate = useNavigate()
 
   const Signin =async(e)=>{
@@ -40,16 +39,14 @@ export default function Signin() {
       setError("")
       setMessage(result.message)
       setTimeout(() => {
-        navigate("/",{state: {message: message}})
-      }, 3000);
+        navigate("/",{state: {message: `welcome ${username}`}})
+      }, 2000);
+      
     }
     }catch(error){
       console.log("Login error", error)   
   }
 }
-
-
-
   return (
     <>
      <div className="bg-black h-screen ">

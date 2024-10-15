@@ -6,7 +6,7 @@ export default function Course() {
     const response = await fetch("http://localhost:3000/api")
     const jsonResponse = await response.json()
     setData(jsonResponse.courses)
-    console.log(jsonResponse.courses)
+    // console.log(jsonResponse.courses)
   }
   useEffect(()=>{
     getData()
