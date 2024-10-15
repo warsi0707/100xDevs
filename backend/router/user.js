@@ -90,7 +90,7 @@ userRouter.post("/signin", async (req, res) => {
 userRouter.get("/profile", userAuth, async (req, res) => {
     try {
         const user = req.user;
-        const { username, fullName,token } = req.user;
+        const { username, fullName,refreshToken } = req.user;
         if (!user && !token) {
             return res.status(404).json({
                 message: "You are not authenticated, Please login"
@@ -100,7 +100,7 @@ userRouter.get("/profile", userAuth, async (req, res) => {
             message: "User Information",
             username: username,
             fullName: fullName,
-            token : token
+            token : refreshToken
         })
     } catch (error) {
         res.status(404).json({
