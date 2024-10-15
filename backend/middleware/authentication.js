@@ -19,12 +19,12 @@ function adminAuth(req, res, next){
 }
 
 function userAuth(req, res, next){
-    const token = req.cookies.token
-    if(!token){
+    const refreshToken = req.cookies.refreshToken
+    if(!refreshToken){
         return res.status(404).json({message: "Not authenticated"})
     }
     try{
-        const decoded = jwt.verify(token,USER_JWT_SECRET)
+        const decoded = jwt.verify(refreshToken,USER_JWT_SECRET)
         if(decoded){
             req.user = decoded
             next()
