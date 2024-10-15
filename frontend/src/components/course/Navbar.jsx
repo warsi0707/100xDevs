@@ -17,11 +17,14 @@ export default function Navbar() {
         try{
           const response = await fetch("https://one00xdevs-be.onrender.com/api/user/profile",{
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            headers : {
+              "Content-Type": "application/json"
+            },
           });
           if(response.ok){
-            setIsAuthenticated(true)
             const result = await response.json()
+            setIsAuthenticated(true)
             setUsername(result.username)
           }else{
             setIsAuthenticated(false)
