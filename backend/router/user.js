@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { User, Course } = require("../database/db");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
-const { USER_JWT_SECRET } = require("../config")
+const { USER_JWT_SECRET,  } = require("../config")
 const { userAuth } = require("../middleware/authentication")
 
 const userRouter = Router()
@@ -42,12 +42,12 @@ userRouter.post("/signin", async (req, res) => {
         const foundUser = await User.findOne({
             username: username
         })
-        if(!foundUser){
+       data = foundUser && foundUser.password ? await bcrypt.compare(password, foundUser.password) : false;
+        if(!data && !foundUser){
             return res.status(404).json({
-                message: `${username} not found, please signup `
+                message: "Username or password not correct"
             })
         }
-        const data = foundUser && foundUser.password ? await bcrypt.compare(password, foundUser.password) : false;
         // const comparePassword = await bcrypt.compare(password, foundUser.password)
         if (foundUser && foundUser) {
             const token = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
@@ -55,9 +55,14 @@ userRouter.post("/signin", async (req, res) => {
                 email: foundUser.email,
                 userId: foundUser._id,
                 fullName: foundUser.fullName
-            }, USER_JWT_SECRET)
+            }, USER_JWT_SECRET,{expiresIn: '1d'})
+            // const refreshToken = jwt.sign({
+            //     username: foundUser.username,
+            //     email: foundUser.email,
+            //     userId: foundUser._id,
+            //     fullName: foundUser.fullName
+            // },refreshToken)
             res.cookie("token", token, {
-                domain: "https://e100xdevs.netlify.app",
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
                 maxAge: 24 * 60 * 60 * 1000,

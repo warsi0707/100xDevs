@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
 
 export default function StarterPage() {
+  
   return (
     <>
       <div className='h-full bg-gray-950 text-gray-300 '>

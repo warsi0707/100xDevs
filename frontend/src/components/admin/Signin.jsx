@@ -18,7 +18,7 @@ export default function Signin() {
   const Signin =async(e)=>{
     e.preventDefault()
     try{
-      const response = await fetch("https://one00xdevs-be.onrender.com/api/user/signin",{
+      const response = await fetch("http://localhost:3000/api/user/signin",{
         method : "POST",
         credentials: 'include',
         headers : {
@@ -30,6 +30,9 @@ export default function Signin() {
       const result =await response.json()
       if(response.status === 404){
         setError(result.message)
+        setTimeout(() => {
+          setError("")
+        }, 3000);
       }else{
       setUsername("")
       setPassword("")
@@ -37,7 +40,7 @@ export default function Signin() {
       setError("")
       setMessage(result.message)
       setTimeout(() => {
-        navigate("/")
+        navigate("/",{state: {message: message}})
       }, 3000);
     }
     }catch(error){

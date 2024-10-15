@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "https://e100xdevs.netlify.app",
+    origin: "http://localhost:5173",
     credentials: true,
 }))
 
@@ -22,10 +22,10 @@ app.use("/api/admin", adminRouter)
 app.use("/api/user", userRouter)
 app.use("/api", courseRouter)
 
-
 const main =async()=>{
     try{
         await mongoose.connect(process.env.MONGO_URL)
+        console.log("Data base connected successfully")
         app.listen(3000)
         console.log("App listing on port 3000")
     }catch(error){

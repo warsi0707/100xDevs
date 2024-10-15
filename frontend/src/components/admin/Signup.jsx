@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Footer from "../course/Footer";
-
+import { redirect } from "react-router-dom";
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -20,7 +20,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const addUser = { username, email, password, fullName };
-      const response = await fetch("https://one00xdevs-be.onrender.com/api/user/signup", {
+      const response = await fetch("http://localhost:3000/api/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,7 +32,15 @@ export default function Signup() {
       if(response.status === 404) {
         setError(result.message);
         setTimeout(() => {
-          navigate("/signup");
+          setError("")
+          setUsername("");
+          setEmail("");
+          setPassword("");
+          setFullName("");
+          setError("");
+        }, 2000);
+        setTimeout(() => {
+          navigate("/signup",{state: {message: "Error"}});
         }, 3000);
        
       }else{

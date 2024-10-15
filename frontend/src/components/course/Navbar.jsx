@@ -15,7 +15,7 @@ export default function Navbar() {
     useEffect(() => {
       const checkAuth = async () => {
         try{
-          const response = await fetch("https://one00xdevs-be.onrender.com/api/user/profile",{
+          const response = await fetch("http://localhost:3000/api/user/profile",{
             credentials: "include"
           });
           if(response.ok){
@@ -37,12 +37,13 @@ export default function Navbar() {
 
   const Logout = async () => {
     try{
-      const response = await fetch("https://one00xdevs-be.onrender.com/api/user/logout", {
+      const response = await fetch("http://localhost:3000/api/user/logout", {
         method: "POST",
         credentials: "include",
       });
       if(response.ok){
         setIsAuthenticated(false)
+
       }
     }catch(error){
       setError("Logout failed, please try again"),
@@ -114,7 +115,6 @@ export default function Navbar() {
           
         </div>
       </div>
-
       <div className={menu ? "md:hidden sm:hidden" : "hidden"}>
         <div className="w-full flex  justify-center  md:hidden mx-auto top-24  fixed ">
           <div className="backdrop-blur-md bg-neutral-900/30 grid justify-items-center  space-y-2 text-lg mx-10 w-[600px] text-white text-center  bg-neutral-900  py-5 gap-2 rounded-3xl  cursor-pointer">
@@ -123,9 +123,10 @@ export default function Navbar() {
             <Link>FAQs</Link>
             {isAuthenticated? (
               <>
-            <button  onClick={Logout}>Logout</button>
-            <Link to="">Your courses</Link>
             <h1>{username}</h1>
+            <Link to="">Your courses</Link>
+            <button  onClick={Logout}>Logout</button>
+            
             </>
           ): (
           <Link to="/signin">Login</Link>
