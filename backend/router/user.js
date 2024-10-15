@@ -43,7 +43,7 @@ userRouter.post("/signin", async (req, res) => {
             username: username
         })
        data = foundUser && foundUser.password ? await bcrypt.compare(password, foundUser.password) : false;
-        if(!data && !foundUser){
+        if(!data){
             return res.status(404).json({
                 message: "Username or password not correct"
             })
@@ -91,7 +91,7 @@ userRouter.get("/profile", userAuth, async (req, res) => {
     try {
         const user = req.user;
         const { username, fullName,refreshToken } = req.user;
-        if (!user && !token) {
+        if (!user) {
             return res.status(404).json({
                 message: "You are not authenticated, Please login"
             })

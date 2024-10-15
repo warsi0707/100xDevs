@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken")
-const { ADMIN_JWT_SECRET } = require("../config")
+const { ADMIN_JWT_SECRET, REFRESH_JWT_TOKEN } = require("../config")
 const { USER_JWT_SECRET } = require("../config")
 
 
@@ -24,7 +24,7 @@ function userAuth(req, res, next){
         return res.status(404).json({message: "Not authenticated"})
     }
     try{
-        const decoded = jwt.verify(refreshToken,USER_JWT_SECRET)
+        const decoded = jwt.verify(refreshToken,REFRESH_JWT_TOKEN)
         if(decoded){
             req.user = decoded
             next()

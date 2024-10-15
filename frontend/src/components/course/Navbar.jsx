@@ -16,6 +16,7 @@ export default function Navbar() {
       const checkAuth = async () => {
         try{
           const response = await fetch("https://one00xdevs-be.onrender.com/api/user/profile",{
+            method: "GET",
             credentials: "include"
           });
           if(response.ok){

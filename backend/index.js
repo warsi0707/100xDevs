@@ -9,7 +9,7 @@ const { courseRouter } = require("./router/course")
 const cookieParser = require("cookie-parser")
 
 // const { required } = require('joi')
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser())
 
