@@ -25,9 +25,9 @@ app.use(cors({
     
 }))
 
-app.use("/api/admin", adminRouter)
+// app.use("/api/admin", adminRouter)
 app.use("/api/user", userRouter)
-app.use("/api", courseRouter)
+app.use("/api/course", courseRouter)
 
 
 const main =async()=>{

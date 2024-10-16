@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 export default function Course() {
   const [data, setData] = useState([])
   const getData=async()=>{
-    const response = await fetch("https://one00xdevs-cx2s.onrender.com/api")
+    const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/course")
     const jsonResponse = await response.json()
     setData(jsonResponse.courses)
     // console.log(jsonResponse.courses)

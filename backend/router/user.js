@@ -152,8 +152,6 @@ userRouter.get("/courses", userAuth, async (req, res) => {
         })
     }
 })
-
-
 userRouter.post("/logout", userAuth, async (req, res) => {
     res.clearCookie("refreshToken",{
         httpOnly: true,

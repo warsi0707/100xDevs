@@ -13,9 +13,8 @@ export default function DetailC() {
 
     
     const detailData =async(id)=>{
-        
         try{
-            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/${id}`)
+            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/course/${id}`)
         const result = await response.json()
         setData(result.course)
         }catch(error){
