@@ -22,7 +22,7 @@ export default function Course() {
             <div key={item._id} className='bg-neutral-900 h-[220px] w-[300px] rounded-3xl '>
           <img src={item.image} alt="" className=' w-full rounded-t-3xl'/>
           <div className='bg-blue-600 p-1 rounded-lg w-20 text-center mx-5 my-2  font-serif text-sm  '>
-            <Link to={`/${item.id}`}>Boy now</Link>
+            <Link to={`/${item._id}`}>Boy now</Link>
             
           </div>
         </div> 
