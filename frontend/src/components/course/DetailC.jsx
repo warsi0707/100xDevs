@@ -11,22 +11,19 @@ export default function DetailC() {
     const navigate = useNavigate()
     const {id} = useParams()
 
-    
-    const detailData =async(id)=>{
-        try{
-            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/course/${id}`)
+    const detailCourse =async()=>{
+        const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/course/${id}`,{
+            method: "GET"
+        })
         const result = await response.json()
         setData(result.course)
-        }catch(error){
-            setError("Course not found"),
-            console.error(error)
-        }
-        
     }
-
+    useEffect(()=>{
+        detailCourse()
+    },[])
+  
     const boyCourse =async() =>{
         try{
-        console.log(id)
             const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
                 method: "POST",
                 credentials: 'include'
@@ -45,9 +42,7 @@ export default function DetailC() {
         }
 
     }
-    useEffect(()=>{
-        detailData()
-    },[])
+    
     
   return (
     <>
