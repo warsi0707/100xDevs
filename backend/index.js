@@ -7,11 +7,11 @@ const { adminRouter } = require("./router/admin")
 const { userRouter } = require("./router/user")
 const { courseRouter } = require("./router/course")
 const cookieParser = require("cookie-parser")
-const path = require("path")
+
 const bodyParser = require("body-parser")
 // const { required } = require('joi')
-const {PORT} = require("./config")
-const _dirname = path.resolve()
+const PORT = process.env.PORT || 5000
+
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.urlencoded({ extended: true }));
@@ -29,12 +29,9 @@ app.use("/api/v1admin", adminRouter)
 app.use("/api/v1user", userRouter)
 app.use("/api/v1", courseRouter)
 
-app.use(express.static(path.join(_dirname, "/frontend/dist")))
 
 
-app.get("*",(req, res) =>{
-    res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"))
-})
+
 
 
 const main =async()=>{
@@ -47,7 +44,7 @@ const main =async()=>{
     }catch(error){
         console.error(error)
        
-    } 
+    }  
 }
 main()
 
