@@ -9,11 +9,11 @@ export default function DetailC() {
     const [error, setError] = useState("")
     const [message, setMessage] = useState("")
     const navigate = useNavigate()
-    
-
     const {id} = useParams()
-    const detailData =async()=>{
-        console.log(id)
+
+    
+    const detailData =async(id)=>{
+        
         try{
             const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/${id}`)
         const result = await response.json()
