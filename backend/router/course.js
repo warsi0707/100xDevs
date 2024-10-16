@@ -20,9 +20,7 @@ courseRouter.get("/",async(req, res) =>{
 courseRouter.get("/:id",async(req, res) =>{
     const id = req.params.id;
     try{
-        const course = await Course.findById({
-            _id:id
-       })
+        const course = await Course.findById(id)
        if(!course){
            return res.json({
                message: "No data available with this id"
