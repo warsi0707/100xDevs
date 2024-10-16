@@ -9,30 +9,28 @@ export default function Navbar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("")
-  
 
- 
+  const checkAuth = async () => {
+    try{
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
+        method: "GET",
+        credentials: "include",
+        
+      });
+      if(response.ok){
+        const result = await response.json()
+        setIsAuthenticated(true)
+        setUsername(result.username)
+      }else{
+        setIsAuthenticated(false)
+      }
+     
+    }catch(error){
+      setError("Failed to authenticate, Please try again"),
+      console.error("Error: ",error)
+    }
+  };
     useEffect(() => {
-      const checkAuth = async () => {
-        try{
-          const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
-            method: "GET",
-            credentials: "include",
-            
-          });
-          if(response.ok){
-            const result = await response.json()
-            setIsAuthenticated(true)
-            setUsername(result.username)
-          }else{
-            setIsAuthenticated(false)
-          }
-         
-        }catch(error){
-          setError("Failed to authenticate, Please try again"),
-          console.error("Error: ",error)
-        }
-      };
       checkAuth();
     }, []);
   

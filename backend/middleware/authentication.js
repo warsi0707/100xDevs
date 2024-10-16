@@ -25,10 +25,9 @@ function userAuth(req, res, next){
     }
     try{
         const decoded = jwt.verify(refreshToken,REFRESH_JWT_TOKEN)
-        if(decoded){
             req.user = decoded
             next()
-        }
+       console.log(decoded)
     }catch(error){
         res.status(404).json({
             message: "You are not log in please log in"
