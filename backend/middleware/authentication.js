@@ -18,13 +18,14 @@ function adminAuth(req, res, next){
     
 }
 
+
 function userAuth(req, res, next){
-    const refreshToken = req.cookies.refreshToken
-    if(!refreshToken){
+    const token = req.cookies.token
+    if(!token){
         return res.status(404).json({message: "Not authenticated"})
     }
     try{
-        const decoded = jwt.verify(refreshToken,REFRESH_JWT_TOKEN)
+        const decoded = jwt.verify(token,USER_JWT_SECRET)
             req.user = decoded
             next()
        console.log(decoded)
@@ -34,6 +35,23 @@ function userAuth(req, res, next){
         })
     }
 }
+
+// function userAuth(req, res, next){
+//     const refreshToken = req.cookies.refreshToken
+//     if(!refreshToken){
+//         return res.status(404).json({message: "Not authenticated"})
+//     }
+//     try{
+//         const decoded = jwt.verify(refreshToken,REFRESH_JWT_TOKEN)
+//             req.user = decoded
+//             next()
+//        console.log(decoded)
+//     }catch(error){
+//         res.status(404).json({
+//             message: "You are not log in please log in"
+//         })
+//     }
+// }
 
 module.exports = {
     adminAuth,

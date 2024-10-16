@@ -57,21 +57,27 @@ userRouter.post("/signin", async (req, res) => {
                 userId: foundUser._id,
                 fullName: foundUser.fullName
             }, USER_JWT_SECRET,{expiresIn: '15m'})
-
-            const refreshToken = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
-                username: foundUser.username,
-                email: foundUser.email,
-                userId: foundUser._id,
-                fullName: foundUser.fullName
-            }, REFRESH_JWT_TOKEN,{expiresIn: '1d'})
-
-
-            res.cookie("refreshToken", refreshToken, {
+            res.cookie("token", token,{
                 httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
+                secure: "productin",
                 maxAge: 24 * 60 * 60 * 1000,
-                sameSite: "lax",   
+                sameSite: "lax"
             })
+
+            // const refreshToken = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
+            //     username: foundUser.username,
+            //     email: foundUser.email,
+            //     userId: foundUser._id,
+            //     fullName: foundUser.fullName
+            // }, REFRESH_JWT_TOKEN,{expiresIn: '1d'})
+
+
+            // res.cookie("refreshToken", refreshToken, {
+            //     httpOnly: true,
+            //     secure: process.env.NODE_ENV === "production",
+            //     maxAge: 24 * 60 * 60 * 1000,
+            //     sameSite: "lax",   
+            // })
             res.json({
                 message: `${username} sign in,`,
                 token: refreshToken,
