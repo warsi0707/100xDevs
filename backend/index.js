@@ -13,34 +13,31 @@ const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 5000
 
 
-app.use(bodyParser.urlencoded({extended:true}))
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "https://one00xdevs-1fe.onrender.com/",
+    origin: "https://one00xdevs-1fe.onrender.com",
     credentials: true,
     
     
 }))
 
-app.use("/api/v1/admin", adminRouter)
-app.use("/api/v1/user", userRouter)
-app.use("/api/v1", courseRouter)
-
-
-
-
+app.use("/api/admin", adminRouter)
+app.use("/api/user", userRouter)
+app.use("/api", courseRouter)
 
 
 const main =async()=>{
     try{
         await mongoose.connect(process.env.MONGO_URL)
         console.log("Data base connected successfully")
-        app.listen(PORT, ()=>{
-            console.log(`Server running on port  ${PORT}`)
-        })
+        app.listen(PORT)
+        console.log(`Server running on port  ${PORT}`)
+        
+
     }catch(error){
         console.error(error)
        

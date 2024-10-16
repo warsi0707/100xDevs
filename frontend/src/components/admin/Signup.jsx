@@ -22,7 +22,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const addUser = { username, email, password, fullName };
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/v1/user/signup", {
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -15,7 +15,7 @@ export default function Navbar() {
     useEffect(() => {
       const checkAuth = async () => {
         try{
-          const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/v1/user/profile",{
+          const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
             method: "GET",
             credentials: "include",
             
@@ -39,7 +39,7 @@ export default function Navbar() {
 
   const Logout = async () => {
     try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/v1/user/logout", {
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/logout", {
         method: "POST",
         credentials: "include",
       });

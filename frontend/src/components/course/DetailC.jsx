@@ -15,7 +15,7 @@ export default function DetailC() {
     const detailData =async()=>{
         console.log(id)
         try{
-            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/v1/${id}`)
+            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/${id}`)
         const result = await response.json()
         setData(result.course)
         }catch(error){
@@ -28,7 +28,7 @@ export default function DetailC() {
     const boyCourse =async() =>{
         try{
         console.log(id)
-            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/v1/user/buy/${id}`,{
+            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
                 method: "POST",
                 credentials: 'include'
             })

@@ -7,27 +7,6 @@ const { userAuth } = require("../middleware/authentication")
 
 const userRouter = Router()
 
-userRouter.get("/profile", userAuth, async (req, res) => {
-    try {
-        const user = req.user;
-        const { username, fullName,refreshToken } = req.user;
-        if (!user) {
-            return res.status(404).json({
-                message: "You are not authenticated, Please login"
-            })
-        }
-        res.json({
-            message: "User Information",
-            username: username,
-            fullName: fullName,
-            token : refreshToken
-        })
-    } catch (error) {
-        res.status(404).json({
-            message: error.message
-        })
-    }
-})
 
 userRouter.post("/signup", async (req, res) => {
     const { username, email, password, fullName } = req.body;
@@ -102,6 +81,27 @@ userRouter.post("/signin", async (req, res) => {
                 message: "User not found"
             })
         }
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
+        })
+    }
+})
+userRouter.get("/profile", userAuth, async (req, res) => {
+    try {
+        const user = req.user;
+        const { username, fullName,refreshToken } = req.user;
+        if (!user) {
+            return res.status(404).json({
+                message: "You are not authenticated, Please login"
+            })
+        }
+        res.json({
+            message: "User Information",
+            username: username,
+            fullName: fullName,
+            token : refreshToken
+        })
     } catch (error) {
         res.status(404).json({
             message: error.message
