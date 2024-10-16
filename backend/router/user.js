@@ -80,7 +80,7 @@ userRouter.post("/signin", async (req, res) => {
             // })
             res.json({
                 message: `${username} sign in,`,
-                token: refreshToken,
+                token: token,
             })
         } else {
             res.json({
