@@ -18,9 +18,7 @@ export default function Navbar() {
           const response = await fetch("https://one00xdevs-be.onrender.com/api/user/profile",{
             method: "GET",
             credentials: "include",
-            headers : {
-              "Content-Type": "application/json"
-            },
+            
           });
           if(response.ok){
             const result = await response.json()

@@ -7,8 +7,13 @@ const { adminRouter } = require("./router/admin")
 const { userRouter } = require("./router/user")
 const { courseRouter } = require("./router/course")
 const cookieParser = require("cookie-parser")
-
+const path = require("path")
+const bodyParser = require("body-parser")
 // const { required } = require('joi')
+const {PORT} = require("./config")
+const _dirname = path.resolve()
+
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(cookieParser())
@@ -16,27 +21,33 @@ app.use(cookieParser())
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    
     
 }))
 
-app.use("/api/admin", adminRouter)
-app.use("/api/user", userRouter)
-app.use("/api", courseRouter)
+app.use("/api/v1admin", adminRouter)
+app.use("/api/v1user", userRouter)
+app.use("/api/v1", courseRouter)
+
+app.use(express.static(path.join(_dirname, "/frontend/dist")))
+
+
+app.get("*",(req, res) =>{
+    res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"))
+})
+
 
 const main =async()=>{
     try{
         await mongoose.connect(process.env.MONGO_URL)
         console.log("Data base connected successfully")
-        app.listen(3000)
-        console.log("App listing on port 3000")
-    }catch(error){
-        res.status(404).json({
-            message: error.message
+        app.listen(PORT, ()=>{
+            console.log(`Server running on port  ${PORT}`)
         })
-    }
-    
+    }catch(error){
+        console.error(error)
+       
+    } 
 }
 main()
 
