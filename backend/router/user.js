@@ -82,22 +82,7 @@ userRouter.post("/signin", async (req, res) => {
     }
 })
 
-userRouter.post("/refresh", (req, res) =>{
-    const icnomingRefreshToken = req.cookies.refreshToken
-    if(!refreshToken){
-        return res.status(404).json({
-            message: "Unathorised request,"
-        })
-    }
-    const decode = jwt.verify(icnomingRefreshToken, REFRESH_JWT_TOKEN)
-    const newToken = jwt.sign({
-        user: decode.user
-    },USER_JWT_SECRET, {expiresIn: "1d"})
-    res.json({
-        accessToken : newToken
-    })
 
-})
 userRouter.get("/profile", userAuth, async (req, res) => {
     try {
         const user = req.user;

@@ -12,14 +12,19 @@ export default function Navbar() {
 
   const checkAuth = async () => {
     try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/refresh",{
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
         method: "GET",
         credentials: "include",
         
       });
+      const result = await response.json()
+      if(result.login === true){
+        setIsAuthenticated(true)
+      }else{
+        setIsAuthenticated(false)
+      }
       if(response.ok){
         const result = await response.json()
-        setIsAuthenticated(true)
         setUsername(result.username)
       }else{
         setIsAuthenticated(false)
