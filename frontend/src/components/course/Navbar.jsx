@@ -12,7 +12,7 @@ export default function Navbar() {
 
   const checkAuth = async () => {
     try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/refresh",{
         method: "GET",
         credentials: "include",
         

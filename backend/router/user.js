@@ -49,38 +49,26 @@ userRouter.post("/signin", async (req, res) => {
                 message: "Username or password not correct"
             })
         }
+      
         // const comparePassword = await bcrypt.compare(password, foundUser.password)
         if (foundUser && foundUser) {
-            const token = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
-                username: foundUser.username,
-                email: foundUser.email,
-                userId: foundUser._id,
-                fullName: foundUser.fullName
+            const accessToken = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
+               userId : foundUser._id
             }, USER_JWT_SECRET,{expiresIn: '15m'})
-            res.cookie("token", token,{
+
+            const refreshToken = jwt.sign({
+                userId : foundUser._id
+            },REFRESH_JWT_TOKEN,{expiresIn: "7d"})
+
+            res.cookie("refreshToken", refreshToken,{
                 httpOnly: true,
-                secure: "productin",
-                maxAge: 24 * 60 * 60 * 1000,
-                sameSite: "lax"
+                secure: true,
+                maxAge: 7 * 24 * 60 * 60 * 1000,
+                sameSite: "strict"
             })
-
-            // const refreshToken = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
-            //     username: foundUser.username,
-            //     email: foundUser.email,
-            //     userId: foundUser._id,
-            //     fullName: foundUser.fullName
-            // }, REFRESH_JWT_TOKEN,{expiresIn: '1d'})
-
-
-            // res.cookie("refreshToken", refreshToken, {
-            //     httpOnly: true,
-            //     secure: process.env.NODE_ENV === "production",
-            //     maxAge: 24 * 60 * 60 * 1000,
-            //     sameSite: "lax",   
-            // })
-            res.json({
+            return res.json({
                 message: `${username} sign in,`,
-                token: token,
+                token: refreshToken,
             })
         } else {
             res.json({
@@ -92,6 +80,23 @@ userRouter.post("/signin", async (req, res) => {
             message: error.message
         })
     }
+})
+
+userRouter.post("/refresh", (req, res) =>{
+    const icnomingRefreshToken = req.cookies.refreshToken
+    if(!refreshToken){
+        return res.status(404).json({
+            message: "Unathorised request,"
+        })
+    }
+    const decode = jwt.verify(icnomingRefreshToken, REFRESH_JWT_TOKEN)
+    const newToken = jwt.sign({
+        user: decode.user
+    },USER_JWT_SECRET, {expiresIn: "1d"})
+    res.json({
+        accessToken : newToken
+    })
+
 })
 userRouter.get("/profile", userAuth, async (req, res) => {
     try {
