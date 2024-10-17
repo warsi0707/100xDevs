@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function Course() {
   const [data, setData] = useState([])
   const getData=async()=>{
-    const response = await fetch("http://localhost:3000/api/course")
+    const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/course")
     const jsonResponse = await response.json()
     setData(jsonResponse.courses)
    

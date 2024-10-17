@@ -16,7 +16,7 @@ export default function Navbar() {
 
   const checkAuth = async () => {
     try{
-      const response = await fetch("http://localhost:3000/api/user/profile",{
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
         method: "GET",
         credentials: "include",
         
@@ -47,7 +47,7 @@ export default function Navbar() {
 
   const Logout = async () => {
     try{
-      const response = await fetch("http://localhost:3000/api/user/logout", {
+      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/logout", {
         method: "POST",
         credentials: "include",
       });

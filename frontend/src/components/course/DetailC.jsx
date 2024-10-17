@@ -12,7 +12,7 @@ export default function DetailC() {
     const {id} = useParams()
 
     const detailCourse =async()=>{
-        const response = await fetch(`http://localhost:3000/api/course/${id}`,{
+        const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/course/${id}`,{
             method: "GET"
         })
         const result = await response.json()
@@ -24,7 +24,7 @@ export default function DetailC() {
   
     const boyCourse =async() =>{
         try{
-            const response = await fetch(`http://localhost:3000/api/user/buy/${id}`,{
+            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
                 method: "POST",
                 credentials: 'include'
             })
