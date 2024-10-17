@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken")
 const { ADMIN_JWT_SECRET, REFRESH_JWT_TOKEN } = require("../config")
 const { USER_JWT_SECRET } = require("../config");
-const { default: errorMap } = require("zod/locales/en.js");
 
 
 function adminAuth(req, res, next){
@@ -23,7 +22,8 @@ function adminAuth(req, res, next){
 function userAuth(req, res, next){
     const refreshToken = req.cookies.refreshToken
     if(!refreshToken){
-        return res.status(404).json({message: "Not authenticated"})
+        renewToken
+        next()
     }
     try{
         const decoded = jwt.verify(refreshToken,REFRESH_JWT_TOKEN)
