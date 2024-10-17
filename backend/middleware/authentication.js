@@ -20,15 +20,14 @@ function adminAuth(req, res, next) {
 
 function userAuth(req, res, next) {
     const refreshToken = req.cookies.refreshToken
-
-    if (!refreshToken) {
-        renewToken
-        next()
-    }
     try {
+        if (!refreshToken) {
+            return renewToken(req, res)
+            next()
+        }
         const decoded = jwt.verify(refreshToken, REFRESH_JWT_TOKEN)
         if (decoded) {
-            req.username = decoded
+            req.username = decoded.username
             next()
         } else {
             return res.status(404).json({
@@ -53,8 +52,12 @@ const renewToken = (req, res) => {
     if (decoded) {
         const newAccessToken = jwt.sign({
             username: decoded.username
-        }, USER_JWT_SECRET, { expiresIn: "1m" })
-        res.cookies("accessToken", newAccessToken, { maxAge: 7 * 24 * 60 * 60 * 1000, })
+        }, USER_JWT_SECRET, { expiresIn: "15m" })
+        res.cookies("accessToken", newAccessToken, { 
+            maxAge: 7 * 24 * 60 * 60 * 1000, 
+            httpOnly: true,
+        })
+        next()
     } else {
         res.status(404).json({
             message: "Not authentiacated"
