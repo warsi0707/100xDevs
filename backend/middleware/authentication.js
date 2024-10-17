@@ -3,61 +3,59 @@ const { ADMIN_JWT_SECRET, REFRESH_JWT_TOKEN } = require("../config")
 const { USER_JWT_SECRET } = require("../config");
 
 
-function adminAuth(req, res, next){
+function adminAuth(req, res, next) {
     const token = req.cookies.token; //this cookies send in every request to verify the admin
-    try{
+    try {
         const decoded = jwt.verify(token, ADMIN_JWT_SECRET)
-        if(decoded){
+        if (decoded) {
             next()
         }
-    }catch(error){
+    } catch (error) {
         res.status(404).json({
             message: "You are not authorised"
         })
     }
-    
 }
 
 
-function userAuth(req, res, next){
+function userAuth(req, res, next) {
     const refreshToken = req.cookies.refreshToken
-    if(!refreshToken){
+
+    if (!refreshToken) {
         renewToken
         next()
     }
-    try{
-        const decoded = jwt.verify(refreshToken,REFRESH_JWT_TOKEN)
-        if(decoded){
-            req.user = decoded
+    try {
+        const decoded = jwt.verify(refreshToken, REFRESH_JWT_TOKEN)
+        if (decoded) {
+            req.username = decoded
             next()
-       console.log(decoded)
-        }else{
+        } else {
             return res.status(404).json({
                 message: "Not authenticated"
             })
         }
-            
-    }catch(error){
-        res.status(404).json({
+    } catch (error) {
+        return res.status(404).json({
             message: "You are not log in please log in"
         })
     }
 }
 
-const renewToken = (req, res) =>{
+const renewToken = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-    if(!refreshToken){
+    if (!refreshToken) {
         return res.json({
             message: "Not authenticated"
         })
     }
     const decoded = jwt.verify(refreshToken, REFRESH_JWT_TOKEN)
-    if(decoded){
+    if (decoded) {
         const newAccessToken = jwt.sign({
-            userId: decoded._id
-        },USER_JWT_SECRET, {expiresIn: "1m"})
-        res.cookies("accessToken", newAccessToken,{ maxAge: 7 * 24 * 60 * 60 * 1000,})
-    }else{
+            username: decoded.username
+        }, USER_JWT_SECRET, { expiresIn: "1m" })
+        res.cookies("accessToken", newAccessToken, { maxAge: 7 * 24 * 60 * 60 * 1000, })
+    } else {
         res.status(404).json({
             message: "Not authentiacated"
         })

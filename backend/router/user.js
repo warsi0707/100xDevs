@@ -26,7 +26,7 @@ userRouter.post("/signup", async (req, res) => {
             password: hashPassword,
             fullName: fullName
         })
-        return  res.json({
+        return res.json({
             message: `${fullName}, Signup successfully`,
             user: newUser
         })
@@ -53,11 +53,11 @@ userRouter.post("/signin", async (req, res) => {
         // const comparePassword = await bcrypt.compare(password, foundUser.password)
         if (foundUser && foundUser) {
             const accessToken = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
-               userId : foundUser._id
+               username : foundUser.username
             }, USER_JWT_SECRET,{expiresIn: '15m'})
 
             const refreshToken = jwt.sign({
-                userId : foundUser._id
+                username : foundUser.username
             },REFRESH_JWT_TOKEN,{expiresIn: "7d"})
 
             res.cookie("refreshToken", refreshToken,{
@@ -68,10 +68,11 @@ userRouter.post("/signin", async (req, res) => {
             })
             return res.json({
                 message: `${username} sign in,`,
-                token: refreshToken,
+                token: accessToken,
+                refreshToken : refreshToken
             })
         } else {
-            res.json({
+            return res.json({
                 message: "User not found"
             })
         }
@@ -85,19 +86,18 @@ userRouter.post("/signin", async (req, res) => {
 
 userRouter.get("/profile", userAuth, async (req, res) => {
     try {
-        const user = req.user;
-        const { username, fullName,refreshToken } = req.user;
-        if (!user) {
+        const username = req.username;
+        const { refreshToken } = req.username;
+        if (!username) {
             return res.status(404).json({
                 login: false,
                 message: "You are not authenticated, Please login"
             })
         }
-        res.json({
+        return res.json({
             message: "User Information",
             login: true,
             username: username,
-            fullName: fullName,
             token : refreshToken
         })
     } catch (error) {
@@ -110,8 +110,14 @@ userRouter.get("/profile", userAuth, async (req, res) => {
 userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
     const { coursId } = req.params; //req course id from the params
     try {
-        const { userId } = req.user //req userid from the cookies middleware
-        const user = await User.findById(userId) //find the user id in db.
+        const foundCourse = await User.findById({_id:coursId}).populate("purchased")
+        if(foundCourse){
+            return res.status(404).json({
+                message: "You have already bought this course"
+            })
+        }
+        const { username } = req.username //req userid from the cookies middleware
+        const user = await User.findOne({username}) //find the user id in db.
         if (!user) {
             return res.json({
                 message: "User not found, please login"
@@ -119,7 +125,7 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
         }
         const purchase = user.purchased.push(coursId) //if user found push the courseId in the user purchased table
         await user.save()
-        res.json({
+        return res.json({
             message: "You have bought this course",
             purchase: purchase
         })
@@ -131,19 +137,28 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
 })
 
 userRouter.get("/courses", userAuth, async (req, res) => {
-    const { userId } = req.user // calling user id from the cookies
+    const { username } = req.username // calling user id from the cookies
     try {
-        const user = await User.findById(userId).populate("purchased") //inside user model find the user with the id and users purchases table
+        const user = await User.findOne({username}).populate("purchased") //inside user model find the user with the id and users purchases table
+        
         if(!user){
             return res.status(404).json({
                 message: "User not found, please login"
             })
         }
         const result = user.purchased;
-        res.json({
-            message: "Your purchased course",
-            purchased: result
-        })
+        if(result){
+            return res.json({
+                message: "Your purchased course",
+                purchased: result
+            })
+            
+        }else{
+            return res.json({
+                message:"No courses available, please buy"
+            })
+        }
+        
     } catch (error) {
         res.json({
             message: error.message

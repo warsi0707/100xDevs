@@ -28,7 +28,7 @@ adminRouter.post("/signup", async(req, res) =>{
             password :hashPassword,
             fullName: fullName
         })
-        res.json({
+        return res.json({
             message: "Admin sign up successfully",
             admin : newAdmin
         })
@@ -56,13 +56,13 @@ adminRouter.post("/signin",async(req, res) =>{
             res.cookie("token",token,{
                 httpOnly: true
             })
-            res.json({
+            return res.json({
                 message : "Admin sign in",
                 token : token,
                 admin: findAdmin
             })
         }else{
-            res.json({
+            return res.json({
                 message: "Admin not found in database please sign up"
             })
         }
@@ -84,7 +84,7 @@ adminRouter.post("/course",adminAuth,async(req, res) =>{
             image: image,
             validity: validity
         })
-        res.status(202).json({
+        return res.status(202).json({
             message: "Course added successfully",
             newCourse : addCourse
         })
@@ -107,7 +107,7 @@ adminRouter.put("/course/:id",adminAuth, async(req, res) =>{
             price: price,
             image: image
         })
-        res.json({
+        return res.json({
             message : "Course updated",
             updatedCourse: course
         })
@@ -124,7 +124,7 @@ adminRouter.delete("/course/:id",adminAuth,async(req, res) =>{
         const deletedCourse = await Course.findByIdAndDelete({
             _id: id
         })
-        res.json({
+        return res.json({
             message: "Course deleted successfully",
             deleted: deletedCourse
         })
@@ -141,11 +141,14 @@ adminRouter.delete("/course/:id",adminAuth,async(req, res) =>{
 adminRouter.post("/logout",adminAuth, async(req, res) =>{
     try{
         res.clearCookie("token")
-        res.json({
+        return res.json({
             message: "Loged out"
         })
     }catch(error){
-        message:error.message
+        res.status(404).json({
+            message:error.message
+        })
+      
     }
 })
 module.exports = {

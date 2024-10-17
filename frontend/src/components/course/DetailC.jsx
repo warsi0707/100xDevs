@@ -12,7 +12,7 @@ export default function DetailC() {
     const {id} = useParams()
 
     const detailCourse =async()=>{
-        const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/course/${id}`,{
+        const response = await fetch(`http://localhost:3000/api/course/${id}`,{
             method: "GET"
         })
         const result = await response.json()
@@ -24,35 +24,36 @@ export default function DetailC() {
   
     const boyCourse =async() =>{
         try{
-            const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
+            const response = await fetch(`http://localhost:3000/api/user/buy/${id}`,{
                 method: "POST",
                 credentials: 'include'
             })
             const result = await response.json()
+            console.log(result.message)
             if(response.ok){
                 setMessage(result.message)
                 setTimeout(() => {
                     navigate("/purchased")
                 }, 2000);
+            } else{
+                setMessage(result.message)
             }
-            console.log(result)
         }catch(error){
             setError(error)
             console.error(error)
         }
-
     }
     
     
   return (
     <>
     
-    <div className="bg-black h-screen " >
+    <div className="bg-black h-full  " >
         {error && <div className="bg-red-800 p-2 w-96 mx-auto rounded-xl">{error}</div> }
-        {message && <div className="bg-green-800 p-2 w-96 mx-auto rounded-xl">{message}</div>}
+        {message && <div className="bg-green-800 p-5 w-96 mx-auto text-center text-xl text-white rounded-xl">{message}</div>}
     
     
-        <div className=" md:flex md:justify-evenly  mx-auto space-y-10 py-5">
+        <div className=" md:flex md:justify-evenly  mx-auto space-y-10 py-5 ">
             <div className="cards w-96 mx-auto mt-8   rounded-2xl border-white border-2  text-2xl ">
                 <div><img src={data.image} className="rounded-t-2xl" /></div>
                 <div className="text-white flex p-5 md:p-8">

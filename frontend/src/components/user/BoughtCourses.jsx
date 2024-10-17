@@ -6,14 +6,14 @@ export default function Purchased() {
   const [courses, setCourses] = useState([])
 
 
+
   const Courses =async()=>{
     try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/courses",{
+      const response = await fetch("http://localhost:3000/api/user/courses",{
         credentials: "include"
       })
       const result = await response.json()
       setCourses(result.purchased)
-      console.log(result)
     }catch(error){
       setError(error)
     }
@@ -25,7 +25,7 @@ export default function Purchased() {
  
   return (
     <>
-    <div className='bg-black h-screen m-0 space-y-10 md:space-y-0 md:flex md:gap-10 pt-10'>
+    <div className='bg-black h-full m-0 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-5  pt-10'>
     {courses.map((course) =>(
       <div key={course._id} className=' h-72 w-96 p-0 bg-black  mx-auto rounded-xl'>
         <div className="img">

@@ -3,21 +3,26 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { NavLink } from "react-router-dom";
 import { HashLink as Link } from "react-router-hash-link";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Navbar() {
   const [menu, setMenu] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("")
   const [username, setUsername] = useState("")
+  const navigate = useNavigate()
 
   const checkAuth = async () => {
     try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
+      const response = await fetch("http://localhost:3000/api/user/profile",{
         method: "GET",
         credentials: "include",
         
       });
       const result = await response.json()
+      setUsername(result.username.username)
       if(result.login === true){
         setIsAuthenticated(true)
       }else{
@@ -42,13 +47,20 @@ export default function Navbar() {
 
   const Logout = async () => {
     try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/logout", {
+      const response = await fetch("http://localhost:3000/api/user/logout", {
         method: "POST",
         credentials: "include",
       });
+      const result = await response.json()
+      console.log(result)
       if(response.ok){
         setIsAuthenticated(false)
-
+        setMessage(result.message)
+        setTimeout(() => {
+          navigate("/")
+          setMessage("")
+        }, 2000);
+        
       }
     }catch(error){
       setError("Logout failed, please try again"),
@@ -62,7 +74,7 @@ export default function Navbar() {
     setMenu(!menu);
   };
   return (
-    <>
+    <> 
       <div className="bg-black text-gray-200 text-xl p-6 sm:p-4 md:p-4 font-serif">
         <div className="flex justify-between ">
           <div className="logo mt-0 sm:mt-5 md:mt-6">
@@ -120,6 +132,7 @@ export default function Navbar() {
           
         </div>
       </div>
+     
       <div className={menu ? "md:hidden sm:hidden" : "hidden"}>
         <div className="w-full flex  justify-center  md:hidden mx-auto top-24  fixed ">
           <div className="backdrop-blur-md bg-neutral-900/30 grid justify-items-center  space-y-2 text-lg mx-10 w-[600px] text-white text-center  bg-neutral-900  py-5 gap-2 rounded-3xl  cursor-pointer">
@@ -139,6 +152,11 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      <div className="bg-gray-950">
+      {message && <div className="bg-red-800 p-2 w-96 mx-auto text-center text-xl text-white rounded-xl">{message}</div> }
+      {/* {error &&  <div className="bg-green-800 p-2 w-96 mx-auto text-center text-xl text-white rounded-xl">{error}</div>} */}
+      </div>
+    
     </>
   );
 }
