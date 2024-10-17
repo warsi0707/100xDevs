@@ -104,11 +104,13 @@ userRouter.get("/profile", userAuth, async (req, res) => {
         const { username, fullName,refreshToken } = req.user;
         if (!user) {
             return res.status(404).json({
+                login: false,
                 message: "You are not authenticated, Please login"
             })
         }
         res.json({
             message: "User Information",
+            login: true,
             username: username,
             fullName: fullName,
             token : refreshToken
