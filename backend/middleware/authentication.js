@@ -27,7 +27,7 @@ function userAuth(req, res, next) {
         }
         const decoded = jwt.verify(refreshToken, REFRESH_JWT_TOKEN)
         if (decoded) {
-            req.username = decoded.username
+            req.user = decoded.id
             next()
         } else {
             return res.status(404).json({
@@ -45,13 +45,14 @@ const renewToken = (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
         return res.json({
-            message: "Not authenticated"
+            message: "Not authenticated",
+            authenticated: false
         })
     }
     const decoded = jwt.verify(refreshToken, REFRESH_JWT_TOKEN)
     if (decoded) {
         const newAccessToken = jwt.sign({
-            username: decoded.username
+            id: decoded._id
         }, USER_JWT_SECRET, { expiresIn: "15m" })
         res.cookies("accessToken", newAccessToken, { 
             maxAge: 7 * 24 * 60 * 60 * 1000, 

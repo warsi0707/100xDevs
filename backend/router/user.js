@@ -2,15 +2,16 @@ const { Router } = require("express");
 const { User, Course } = require("../database/db");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
-const { USER_JWT_SECRET,REFRESH_JWT_TOKEN  } = require("../config")
+const { USER_JWT_SECRET,REFRESH_JWT_TOKEN,refreshToken  } = require("../config")
 const { userAuth } = require("../middleware/authentication")
 
 const userRouter = Router()
 
 
 userRouter.post("/signup", async (req, res) => {
-    const { username, email, password, fullName } = req.body;
+
     try {
+        const { username, email, password, fullName } = req.body;
         const exisUser = await User.findOne({
             username: username
         })
@@ -53,11 +54,11 @@ userRouter.post("/signin", async (req, res) => {
         // const comparePassword = await bcrypt.compare(password, foundUser.password)
         if (foundUser && foundUser) {
             const accessToken = jwt.sign({ //seeding the user info in the cookies, this information available on every authenticated request
-               username : foundUser.username
+               id : foundUser._id
             }, USER_JWT_SECRET,{expiresIn: '15m'})
 
             const refreshToken = jwt.sign({
-                username : foundUser.username
+                id : foundUser._id
             },REFRESH_JWT_TOKEN,{expiresIn: "7d"})
 
             res.cookie("refreshToken", refreshToken,{
@@ -83,30 +84,6 @@ userRouter.post("/signin", async (req, res) => {
     }
 })
 
-
-userRouter.get("/profile", userAuth, async (req, res) => {
-    try {
-        const username = req.username;
-        const { refreshToken } = req.username;
-        if (!username) {
-            return res.status(404).json({
-                login: false,
-                message: "You are not authenticated, Please login"
-            })
-        }
-        return res.json({
-            message: "User Information",
-            login: true,
-            username: username,
-            token : refreshToken
-        })
-    } catch (error) {
-        res.status(404).json({
-            message: error.message
-        })
-    }
-})
-
 userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
     const { coursId } = req.params; //req course id from the params
     try {
@@ -116,8 +93,9 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
                 message: "You have already bought this course"
             })
         }
-        const { username } = req.username //req userid from the cookies middleware
-        const user = await User.findOne({username}) //find the user id in db.
+        const  id  = req.user //req userid from the cookies middleware
+        console.log(id)
+        const user = await User.findById(id) //find the user id in db.
         if (!user) {
             return res.json({
                 message: "User not found, please login"
@@ -137,10 +115,11 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
 })
 
 userRouter.get("/courses", userAuth, async (req, res) => {
-    const { username } = req.username // calling user id from the cookies
+    const  id  = req.user // calling user id from the cookies
+    console.log(id)
     try {
-        const user = await User.findOne({username}).populate("purchased") //inside user model find the user with the id and users purchases table
-        
+        const user = await User.findById(id).populate("purchased") //inside user model find the user with the id and users purchases table
+        console.log(user)
         if(!user){
             return res.status(404).json({
                 message: "User not found, please login"
@@ -161,6 +140,36 @@ userRouter.get("/courses", userAuth, async (req, res) => {
         
     } catch (error) {
         res.json({
+            message: error.message
+        })
+    }
+})
+
+userRouter.get("/auth-status",userAuth,async(req,res)=>{
+    try{
+        const refreshToken = req.cookies.refreshToken;
+       
+        if(!refreshToken){
+            return res.status(404).json({
+                authenticated: false
+            })
+        }
+        const decode = jwt.verify(refreshToken, REFRESH_JWT_TOKEN)
+       
+        const user = await User.findById(decode.id)
+        if(!user){
+            return res.status(404).json({
+                authenticated: false,
+                username: user.username
+            })
+        }
+        return res.json({
+            authenticated: true
+
+        })
+        
+    }catch(error){
+        res.status(404).json({
             message: error.message
         })
     }

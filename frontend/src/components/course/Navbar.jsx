@@ -1,48 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { NavLink } from "react-router-dom";
 import { HashLink as Link } from "react-router-hash-link";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthProvider";
 
 
 export default function Navbar() {
+  const {isAuthenticated, setIsAuthenticated,username, setUserame} = useContext(AuthContext)
   const [menu, setMenu] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("")
-  const [username, setUsername] = useState("")
+
   const navigate = useNavigate()
 
-  const checkAuth = async () => {
-    try{
-      const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/user/profile",{
-        method: "GET",
-        credentials: "include",
-        
-      });
-      const result = await response.json()
-      setUsername(result.username.username)
-      if(result.login === true){
-        setIsAuthenticated(true)
-      }else{
-        setIsAuthenticated(false)
-      }
-      if(response.ok){
-        const result = await response.json()
-        setUsername(result.username)
-      }else{
-        setIsAuthenticated(false)
-      }
-     
-    }catch(error){
-      setError("Failed to authenticate, Please try again"),
-      console.error("Error: ",error)
-    }
-  };
-    useEffect(() => {
-      checkAuth();
-    }, []);
+ 
   
 
   const Logout = async () => {
