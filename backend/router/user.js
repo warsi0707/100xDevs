@@ -63,9 +63,9 @@ userRouter.post("/signin", async (req, res) => {
 
             res.cookie("refreshToken", refreshToken,{
                 httpOnly: true,
-                secure: true,
+                // secure: true,
                 maxAge: 7 * 24 * 60 * 60 * 1000,
-                sameSite: "strict"
+                sameSite: "lax"
             })
             return res.json({
                 message: `${username} sign in,`,
