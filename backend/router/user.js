@@ -2,9 +2,9 @@ const { Router } = require("express");
 const { User, Course } = require("../database/db");
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken")
-const { USER_JWT_SECRET,REFRESH_JWT_TOKEN,refreshToken  } = require("../config")
+const { USER_JWT_SECRET,REFRESH_JWT_TOKEN,refreshToken,NODE_ENV  } = require("../config")
 const { userAuth } = require("../middleware/authentication");
-const { preprocess } = require("zod");
+
 
 const userRouter = Router()
 
@@ -64,7 +64,7 @@ userRouter.post("/signin", async (req, res) => {
 
             res.cookie("refreshToken", refreshToken,{
                 httpOnly: true,
-                secure: preprocess.env.NODE_ENV === "production",
+                secure: NODE_ENV === "production",
                 maxAge: 7 * 24 * 60 * 60 * 1000,
                 sameSite: "strict"
             })
