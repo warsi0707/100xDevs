@@ -178,8 +178,8 @@ userRouter.get("/auth-status",userAuth,async(req,res)=>{
 userRouter.post("/logout", userAuth, async (req, res) => {
     res.clearCookie("refreshToken",{
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",  
+        sameSite: process.env.NODE_ENV==="Development"?"lax":"none",
+        secure:process.env.NODE_ENV==="Development"?false:true,
     })
     res.json({
         message: "Loged out"
