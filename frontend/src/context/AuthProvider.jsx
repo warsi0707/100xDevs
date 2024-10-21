@@ -14,11 +14,12 @@ export  function AuthProvider({ children }) {
               credentials: 'include'
           })
           const result = await response.json()
-          if(result.authenticated !== true){
-              setIsAuthenticated(false)
-          }else{
+          if(result.authenticated === true){
               setIsAuthenticated(true)
-              setIsAuthenticated(result.username)
+              setUserame(result.username)
+          }else{
+              setIsAuthenticated(false)
+              
           }
           }catch(err){
             setIsAuthenticated(false)
