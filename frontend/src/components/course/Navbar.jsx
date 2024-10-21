@@ -10,13 +10,11 @@ import AuthContext from "../../context/AuthProvider";
 export default function Navbar() {
   const {isAuthenticated, setIsAuthenticated,username, setUserame} = useContext(AuthContext)
   const [menu, setMenu] = useState(false);
+  const [signup, setSignup] = useState(false)
+  const [signin, setSignin] = useState(false)
   const [message, setMessage] = useState("");
   const [error, setError] = useState("")
-
   const navigate = useNavigate()
-
- 
-  
 
   const Logout = async () => {
     try{
@@ -41,8 +39,12 @@ export default function Navbar() {
     }
   };
 
-
-
+const handleSignup =()=>{
+  setSignup(!signup)
+}
+const handleSignin =()=>{
+  setSignin(!signin)
+}
   const handleMenu = () => {
     setMenu(!menu);
   };
@@ -91,10 +93,10 @@ export default function Navbar() {
               ) :(
               <>
               <h1 className="transition delay-200 hover:underline  hover:text-blue-600">
-                <Link to="/signup">Signup</Link>
+                <Link onClick={handleSignup}>Signup</Link>
               </h1>
               <h1 className="transition delay-200 hover:underline  hover:text-blue-600">
-                <Link to="/signin">Login</Link>
+                <Link onClick={handleSignin}>Login</Link>
               </h1>
               </>
               )}
@@ -120,7 +122,10 @@ export default function Navbar() {
             
             </>
           ): (
-          <Link to="/signin">Login</Link>
+            <>
+            <Link onClick={handleSignup}>Signup</Link>
+          <Link onClick={handleSignin}>Login</Link>
+          </>
           )}
           </div>
         </div>
@@ -129,7 +134,52 @@ export default function Navbar() {
       {message && <div className="bg-red-800 p-2 w-96 mx-auto text-center text-xl text-white rounded-xl">{message}</div> }
       {/* {error &&  <div className="bg-green-800 p-2 w-96 mx-auto text-center text-xl text-white rounded-xl">{error}</div>} */}
       </div>
-    
+
+      {signup? <>
+      <div id="#signup" className="bg-gray-950  mx-auto pt-10  ">
+      <div className='w-[350px] sm:w-[550px] md:w-[600px] bg-neutral-900/30  backdrop-blur-md s mx-auto p-5 rounded-2xl text-black md:mx-auto'>
+        <h1 className="text-white text-3xl text-center">Signup</h1>
+      <form action="">
+        <div className="inputs flex flex-col space-y-3 p-2 sm:p-5 md:p-5">
+          <label htmlFor="" className="text-white text-xl">Username</label>
+          <input type="text" className="p-1 rounded-xl text-start text-2xl sm:p-2 md:p-2"/>
+          <label htmlFor="" className="text-white text-xl">Username</label>
+          <input type="text" className="p-1 rounded-xl text-start text-2xl sm:p-2 md:p-2"/>
+          <label htmlFor="" className="text-white text-xl">Username</label>
+          <input type="text" className="p-1 rounded-xl text-start text-2xl sm:p-2 md:p-2"/>
+          <label htmlFor="" className="text-white text-xl">Username</label>
+          <input type="text" className="p-1 rounded-xl text-start text-2xl sm:p-2 md:p-2"/>
+        
+        </div>
+        <button className="btn w-full mt-5 bg-gray-700 text-center p-1 text-2xl rounded-2xl text-white hover:bg-gray-800">Signup</button>
+      
+        </form>
+      </div>
+      
+
+      </div>
+      </>: ""}
+      {signin? <>
+      <div className="bg-gray-950  mx-auto pt-10  ">
+      <div className='w-[350px] sm:w-[550px] md:w-[600px] bg-neutral-900/30  backdrop-blur-md s mx-auto p-5 rounded-2xl text-black md:mx-auto'>
+        <h1 className="text-white text-3xl text-center">Signin</h1>
+      <form action="">
+        <div className="inputs flex flex-col space-y-3 p-2 sm:p-5 md:p-5 text-white">
+          <label htmlFor="" className="text-white text-xl">Username</label>
+          <input type="text" className="p-1 rounded-xl text-black text-start text-2xl sm:p-2 md:p-2"/>
+          <label htmlFor="" className="text-white  text-xl">Username</label>
+          <input type="text" className="p-1 rounded-xl text-black text-start text-2xl sm:p-2 md:p-2"/>
+          <h1 className="text-lg">Dont have an account  <a href="/signup" className="text-blue-600 underline">Signup</a></h1>
+          
+          <button className="btn bg-gray-700 text-center p-1 text-2xl rounded-2xl text-white hover:bg-gray-800">Signin</button>
+        </div>
+      
+        </form>
+      </div>
+      
+
+      </div>
+      </>: ""}
     </>
   );
 }

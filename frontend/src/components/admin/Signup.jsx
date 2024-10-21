@@ -79,14 +79,14 @@ export default function Signup() {
         )}
       </div>
 
-      <div className=" p-10 w-full  md:mx-auto md:w-[550px]   ">
+      <div className=" p-10 w-autotext-center  md:mx-auto md:w-[550px] sm:w-[550px]   ">
         <div className="bg-gray-300  rounded-2xl p-5">
           <h1 className="text-center text-2xl">Sign into your account</h1>
-          <div>
+          <div className="text-center ">
             <form onSubmit={Signup}>
               <Box
                 component="form"
-                sx={{ "& > :not(style)": { m: 2, width: "45ch" } }}
+                sx={{ "& > :not(style)": { m: 2, width: "40ch" } }}
                 autoComplete="off"
               >
                 <TextField

@@ -6,7 +6,9 @@ export default function StarterPage() {
   
   return (
     <>
+    
       <div className='h-full bg-gray-950 text-gray-300 '>
+      
         <div className='my md:w-[800px] py-20 px-10  md:py-36  flex justify-center mx-auto top-10 '>
             <div className='flex flex-col text-center space-y-10'>
                 <h1 className='text-5xl'>Start Your Web and web3 Journey with us</h1>
