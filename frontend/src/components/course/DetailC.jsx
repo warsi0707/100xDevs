@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { MdOutlineCurrencyRupee } from "react-icons/md";
-import Footer from "./Footer"
+import Footer from "../NavFooter/Footer";
 
 export default function DetailC() {
     const [data, setData] = useState([])

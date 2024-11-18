@@ -4,7 +4,8 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from "react-router-dom";
-import Footer from '../course/Footer';
+import Footer from '../NavFooter/Footer';
+
 
 
 export default function Signin() {

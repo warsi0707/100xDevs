@@ -16,7 +16,19 @@ courseRouter.get("/",async(req, res) =>{
         })
     }
 })
+courseRouter.get("/starter", async(req, res) =>{
+    try{
+        const item = await Course.find({}).limit(3)
+        return res.json({
+            item: item
+        })
 
+    }catch(error){
+        res.status(404).json({
+            message: error.message
+        })
+    }
+})
 courseRouter.get("/:id",async(req, res) =>{
     const id = req.params.id;
     try{

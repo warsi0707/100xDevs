@@ -7,19 +7,21 @@ export default function Footer() {
   
   return (
     <>
-    <footer className='bg-purple-700 h-[400px] flex justify-center items-center px-5 gap-5  sm:gap-20 md:gap-44 text-white'>
-        <div className='flex flex-col text-start space-y-8'>
-            <h1 className='text-3xl '>eCourse</h1>
-            <p className='w-52 sm:w-80 md:w-96'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus velit eius unde eos tenetur quae praesentium aperiam ipsam, illum consequuntur.</p>
+    <footer className='bg-blue-200 p-5 space-y-2 md:flex  justify-between w-[500px] px-20 pt-10 md:w-[1100px] mx-auto mt-10 rounded-t-xl pb-10'>
+      <div className="logo">
+        <img src="/logo.png" className='flex justify-items-center' width={80} height={80} alt="" />
+      </div>  
+      <div className="inks">
+        <h1 className='text-black font-bold text-xl '>Quicks Links</h1>
+        <div className='flex flex-col mt-5 underline text-blue-700'>
+        <a href="">Contact</a>
+        <a href="">Terms and Conditions</a>
+        <a href="">Privacy Policy</a>
         </div>
-        <div className='text-center mb-12 space-y-10'>
-            <h1 className='text-2xl '>get in touch</h1>
-            <div className='flex text-2xl gap-3 md:gap-5 sm:text-4xl md:text-4xl'>
-              <a href="" className='hover:bg-red-700 rounded-xl'><FaInstagram/></a>
-                <a href=""className='hover:bg-red-700 rounded-xl' ><CiLinkedin/></a>
-                <a href="" className='hover:bg-red-700 rounded-xl'><CiTwitter/></a>
-            </div>
-        </div>
+      </div>
+      <div className="apps">
+        <h1>Download app</h1>
+      </div>
 
     </footer>
       

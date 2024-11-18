@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Footer from '../course/Footer'
+import Footer from "../NavFooter/Footer"
 
 export default function Purchased() {
   const [error, setError] = useState("")
