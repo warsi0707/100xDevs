@@ -5,6 +5,7 @@ export default function Course() {
   const [course, setCourse] = useState([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(true)
+
   try{
     const AllCourse =async()=>{
       const response = await fetch("https://one00xdevs-cx2s.onrender.com/api/course",{
@@ -44,7 +45,7 @@ export default function Course() {
                 <p>16 off</p>
             </div>
             <div className="btn mt-5">
-                <button className='bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2'>Submit</button>
+                <button className='bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2 hover:bg-blue-800 delay-200'><a href={`/course/${item._id}`}  >View Details</a></button>
             </div>
         </div>
       </div>

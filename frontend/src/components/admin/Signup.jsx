@@ -63,7 +63,7 @@ export default function Signup() {
 
   return (
     <>
-    <div className="bg-black h-screen ">
+    <div className=" absolute left-1/3 ">
   
       {message && (
         <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto py-5 rounded-2xl text-white text-center text-xl">
@@ -131,7 +131,7 @@ export default function Signup() {
         </div>
       </div>
       </div>
-      <Footer/>
+    
     </>
   );
 }

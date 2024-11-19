@@ -3,10 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { useLocation, useNavigate } from "react-router-dom";
-import Footer from '../NavFooter/Footer';
-
-
+import {useNavigate } from "react-router-dom";
 
 export default function Signin() {
   const [username, setUsername] = useState("")
@@ -50,7 +47,7 @@ export default function Signin() {
 }
   return (
     <>
-     <div className="bg-black h-screen ">
+     <div className=" absolute left-1/3">
    
     {message && (
         <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto py-5 rounded-2xl text-white text-center text-2xl">
@@ -66,7 +63,7 @@ export default function Signin() {
         )}
     </div>
       <div className='p-10 w-[550px] mx-auto pt-10 '>
-       <div className='bg-white  rounded-2xl p-5'>
+       <div className='bg-gray-300   rounded-2xl p-5'>
         <h1 className='text-center text-2xl'>Sign into your account</h1>
         <div>
           <form onSubmit={Signin}>
@@ -89,7 +86,7 @@ export default function Signin() {
        </div>
       </div>
       </div>
-      <Footer/>
+     
     </>
   )
 }

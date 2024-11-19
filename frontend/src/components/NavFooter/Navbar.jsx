@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthProvider";
 import { IoSearchSharp } from "react-icons/io5";
 import { IoChevronForwardCircleOutline } from "react-icons/io5";
+import Signup from "../admin/Signup";
+import Signin from "../admin/Signin";
 
 export default function Navbar() {
   const { isAuthenticated, setIsAuthenticated, username, setUserame } =
@@ -55,7 +57,7 @@ export default function Navbar() {
   //react-icons.github.io/react-icons/
   https: return (
     <>
-      <nav className="w-full bg-white text-gray-700 p-2 flex justify-between border-b-2 shadow-md fixed ">
+      <nav className="w-full bg-white text-gray-700 p-2 flex justify-between border-b-2 shadow-md  ">
         <div className="logo text-2xl text-black ml-10">
           <img src="/logo.png" width={50} height={40} alt="" />
         </div>
@@ -76,12 +78,18 @@ export default function Navbar() {
                 <i className="fa-solid fa-graduation-cap"></i>Cource
               </a>
             </div>
-            <button className="bg-blue-600 px-6   text-md rounded-full text-white hover:bg-blue-700">
-              Signup
+            {!isAuthenticated?<>
+            <button onClick={handleSignup} className="bg-blue-600 px-6   text-md rounded-full text-white hover:bg-blue-700">
+            Signup
             </button>
-            <button className="bg-blue-600 px-6 text-md rounded-full text-white hover:bg-blue-700">
+            <button onClick={handleSignin} className="bg-blue-600 px-6 text-md rounded-full text-white hover:bg-blue-700">
               Login
             </button>
+            </>: <>
+            <button onClick={Logout} className="bg-blue-600 px-6 text-md rounded-full text-white hover:bg-blue-700">
+              Logout
+            </button>
+            </>}
           </div>
         </div>
         <div className="flex gap-2 text-center mt-2 mr-5 sm:hidden">
@@ -93,6 +101,9 @@ export default function Navbar() {
           </a>
         </div>
       </nav>
+
+      {signup?<Signup/>: ""}
+      {signin? <Signin/>: ""}
     </>
   );
 }
