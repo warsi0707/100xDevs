@@ -71,12 +71,8 @@ export default function Navbar() {
 
           <div className="md:flex hidden  gap-2">
             <div className="text-xl flex justify-center mt-3 gap-2">
-              <a href="/" className="gap-1">
-                <i className="fa-solid fa-house"></i>Home
-              </a>
-              <a href="/course">
-                <i className="fa-solid fa-graduation-cap"></i>Cource
-              </a>
+              <NavLink to={"/"} className="gap-1"><i className="fa-solid fa-house"></i>Home</NavLink>
+              <NavLink to={"/course"}> <i className="fa-solid fa-graduation-cap"></i>Cource</NavLink>
             </div>
             {!isAuthenticated?<>
             <button onClick={handleSignup} className="bg-blue-600 px-6   text-md rounded-full text-white hover:bg-blue-700">
@@ -86,7 +82,8 @@ export default function Navbar() {
               Login
             </button>
             </>: <>
-            <a href="/purchased" className="mt-3 text-xl"><i className="fa-solid fa-download"></i>Purchased</a>
+            <NavLink to={"/purchased"}  className="mt-3 text-xl"><i className="fa-solid fa-download"></i>Purchased</NavLink>
+           
             <button onClick={Logout} className="bg-blue-600 px-6 text-md rounded-full text-white hover:bg-blue-700">
               Logout
             </button>
