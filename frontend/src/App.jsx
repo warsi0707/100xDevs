@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as  HashRouter, Route, Routes } from "react-router-dom";
+import {BrowserRouter as Router,  HashRouter, Route, Routes } from "react-router-dom";
 import Navbar from './components/NavFooter/Navbar'
 import Home from './components/home/Home';
 import DetailC from './components/home/DetailC';
@@ -12,7 +12,7 @@ import Course from './components/home/Course';
 
 export default function App() {
   return (
-    <HashRouter>
+    <Router>
       <AuthProvider>
       <Navbar/>
       <Routes>
@@ -26,6 +26,6 @@ export default function App() {
      
       </AuthProvider>
    
-    </HashRouter>
+    </Router>
   )
 }
