@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signin() {
   const [username, setUsername] = useState("")
@@ -25,22 +25,22 @@ export default function Signin() {
         body: JSON.stringify({username, password})
       })
       const result =await response.json()
-      if(response.status === 404){
+      if(response.ok){
+        setUsername("")
+        setPassword("")
+        setMessage("")
+        setError("")
+        setMessage(result.message)
+        setTimeout(() => {
+          setMessage("")
+          navigate("/")
+        }, 2000);
+      }else{
         setError(result.message)
         setTimeout(() => {
           setError("")
         }, 3000);
-      }else{
-      setUsername("")
-      setPassword("")
-      setMessage("")
-      setError("")
-      setMessage(result.message)
-      setTimeout(() => {
-        navigate("/",{state: {message: `welcome ${username}`}})
-      }, 2000);
-      
-    }
+      }
     }catch(error){
       console.error("Login error", error)   
   }

@@ -42,10 +42,13 @@ export default function Course() {
             <h1 className='text-center mt-3 text-black font-bold text-xl'>{item.title}</h1>
             <div className="prices flex justify-between mx-5 mt-8">
                 <p><i className="fa-solid fa-indian-rupee-sign"> &nbsp;</i>{item.price}</p>
-                <p>16 off</p>
+                <p className='text-green-500 font-bold'>16% off</p>
             </div>
             <div className="btn mt-5">
-                <button className='bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2 hover:bg-blue-800 delay-200'><a href={`/course/${item._id}`}  >View Details</a></button>
+              <a href={`/course/${item._id}`}>
+              <button className='bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2 hover:bg-blue-800 delay-200'>View Details</button>
+              </a>
+                
             </div>
         </div>
       </div>

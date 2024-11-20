@@ -38,7 +38,6 @@ userRouter.post("/signup", async (req, res) => {
         })
     }
 })
-
 userRouter.post("/signin", async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -84,11 +83,13 @@ userRouter.post("/signin", async (req, res) => {
         })
     }
 })
-
 userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
     const { coursId } = req.params; //req course id from the params
+    const  id  = req.user
     try {
-        const foundCourse = await User.findById({_id:coursId}).populate("purchased")
+        const foundCourse = await User.findById(coursId).populate("purchased")
+       
+        console.log(foundCourse)
         if(foundCourse){
             return res.status(404).json({
                 message: "You have already bought this course"
@@ -114,7 +115,6 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
         })
     }
 })
-
 userRouter.get("/courses", userAuth, async (req, res) => {
     const  id  = req.user // calling user id from the cookies
     console.log(id)
@@ -145,7 +145,6 @@ userRouter.get("/courses", userAuth, async (req, res) => {
         })
     }
 })
-
 userRouter.get("/auth-status",userAuth,async(req,res)=>{
     try{
         const refreshToken = req.cookies.refreshToken;

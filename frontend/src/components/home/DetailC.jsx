@@ -19,11 +19,20 @@ export default function DetailC() {
       setCourse(result.course)
      }
     }
+    
     useEffect(()=>{
       Data()
     },[])
   }catch(err){
     setError(err)
+  }
+  const Buy =async()=>{
+    const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
+      method: "POST",
+      credentials: "include"
+    })
+    const result = await response.json()
+    console.log(result)
   }
   
   return (
@@ -31,7 +40,7 @@ export default function DetailC() {
     <div className='bg-blue-800 w-full p-14 '>
      <h1 className='text-white text-4xl '>Complete Web Development + <br /> Devops + Blockchain Cohort</h1>
     </div>
-    <div className='md:flex space-y-reverse  md:justify-evenly gap-20 mx-20 my-5'>
+    <div className='md:flex space-y-reverse   md:justify-evenly gap-20 mx-20 my-5'>
         <div className='w-96 h-96 '>
         </div>
         <div className=" md:w-[1000px] mx-auto md:-translate-y-36">
@@ -54,7 +63,7 @@ export default function DetailC() {
                   <p>16 off</p>
                 </div>
                 <div className="btn mt-5">
-                  <button className="bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2  hover:bg-blue-800 delay-200">
+                  <button onClick={Buy} className="bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2  hover:bg-blue-800 delay-200">
                     Buy Now
                   </button>
                 </div>

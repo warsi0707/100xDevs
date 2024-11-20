@@ -14,6 +14,7 @@ export default function Navbar() {
   const { isAuthenticated, setIsAuthenticated, username, setUserame } =
     useContext(AuthContext);
   const [menu, setMenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   const [signup, setSignup] = useState(false);
   const [signin, setSignin] = useState(false);
   const [message, setMessage] = useState("");
@@ -54,8 +55,7 @@ export default function Navbar() {
   const handleMenu = () => {
     setMenu(!menu);
   };
-  //react-icons.github.io/react-icons/
-  https: return (
+   return (
     <>
       <nav className="w-full bg-white text-gray-700 p-2 flex justify-between border-b-2 shadow-md  ">
         <div className="logo text-2xl text-black ml-10">
@@ -86,6 +86,7 @@ export default function Navbar() {
               Login
             </button>
             </>: <>
+            <a href="/purchased" className="mt-3 text-xl"><i className="fa-solid fa-download"></i>Purchased</a>
             <button onClick={Logout} className="bg-blue-600 px-6 text-md rounded-full text-white hover:bg-blue-700">
               Logout
             </button>
@@ -96,12 +97,14 @@ export default function Navbar() {
           <a href="" className="text-3xl text-gray-500">
             <IoSearchSharp />
           </a>
-          <a href="" className="text-3xl text-gray-500">
+          <button onClick={handleMenu} className="text-3xl text-gray-500">
             <IoChevronForwardCircleOutline />
-          </a>
+          </button>
+          
         </div>
       </nav>
-
+      {handleMenu?<div className="bg-gray-600 w-96 h-96 mx-auto md:hidden"></div>: ""}
+      
       {signup?<Signup/>: ""}
       {signin? <Signin/>: ""}
     </>

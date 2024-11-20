@@ -25,15 +25,20 @@ export default function Purchased() {
  
   return (
     <>
-    <div className='bg-black h-full m-0 space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-5  pt-10'>
+    <div className='m-0 space-y-10 md:space-y-0 md:grid sm:grid-cols-1 md:grid-cols-3 md:gap-5 pt-10'>
     {courses.map((course) =>(
-      <div key={course._id} className=' h-72 w-96 p-0 bg-black  mx-auto rounded-xl'>
+      <div key={course._id} className='w-96 p-0 text-black mx-auto rounded-xl border-2 border-gray-300'>
         <div className="img">
-          <img className='rounded-xl' src={course.image} />
+          <img className='rounded-t-xl' src={course.image} />
         </div>
-        <div className='text-white mt-4 md:mt-10 text-xl'>
-          <h1>{course.title}</h1>
+        <div>
+          <h1 className='text-lg text-center py-3'>{course.title}</h1>
         </div>
+        <div className="flex flex-col gap-2 p-5">
+        <button className='bg-blue-500 text-lg w-full text-white rounded-2xl py-2'>View</button>
+        <button className='bg-blue-500 text-lg w-full text-white rounded-2xl py-2'>View Invoice</button>
+        </div>
+       
       </div>
      ))}
 
