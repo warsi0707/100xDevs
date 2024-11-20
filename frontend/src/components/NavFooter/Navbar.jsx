@@ -105,10 +105,17 @@ export default function Navbar() {
           <div className="bg-gray-500 p-5 w-auto  sm:w-96 mx-auto rounded-xl  text-black flex flex-col gap-2 justify-center items-center">
             <NavLink to={"/#"} className="w-full hover:bg-indigo-300 p-1 text-center rounded-xl text-xl flex justify-center gap-2"><i className="fa-solid fa-house pt-1"></i>Home</NavLink>
             <NavLink to={"/course"} className="w-full hover:bg-indigo-300 p-1 text-center rounded-xl text-xl flex justify-center gap-2"><i className="fa-solid fa-graduation-cap"></i>Course</NavLink>
-            {isAuthenticated?<button onClick={Logout} className="w-full bg-red-500 hover:bg-red-600 p-1 text-center rounded-xl text-xl flex justify-center gap-2">Logout</button>:
+            {isAuthenticated?<>
+              <NavLink to={"/purchased"} className="w-full hover:bg-indigo-300 p-1 text-center rounded-xl text-xl flex justify-center gap-2"><i className="fa-solid fa-download"></i>Purchased</NavLink>
+             <button onClick={Logout} className="w-full bg-red-500 hover:bg-red-600 p-1 text-center rounded-xl text-xl flex justify-center gap-2">Logout</button>
+            
+            </>
+            :
             <>
             <button onClick={handleSignup} className="w-full bg-yellow-500 hover:bg-yellow-600 p-1 text-center rounded-xl text-xl flex justify-center gap-2">Signup</button>
-            <button onClick={handleSignin} className="w-full bg-green-500 hover:bg-green-600 p-1 text-center rounded-xl text-xl flex justify-center gap-2">Signin</button>
+            <button onClick={handleSignin} className="w-full  bg-green-500 hover:bg-green-600 p-1 text-center rounded-xl text-xl flex justify-center gap-2" > <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24">
+
+  </svg>Signin</button>
             </>
             }
             

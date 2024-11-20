@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 
 export default function DetailC() {
   const [course, setCourse] = useState([])
   const [loading, setLoading] = useState(true)
+  const [message, setMessage] = useState("")
   const [error, setError] = useState("")
+  const navigate = useNavigate()
   const {id} = useParams()
   try{
     const Data =async()=>{
@@ -26,17 +30,41 @@ export default function DetailC() {
   }catch(err){
     setError(err)
   }
-  const Buy =async()=>{
-    const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
-      method: "POST",
-      credentials: "include"
-    })
-    const result = await response.json()
-    console.log(result)
-  }
+ 
+    const Buy =async()=>{
+      try{
+      const response = await fetch(`https://one00xdevs-cx2s.onrender.com/api/user/buy/${id}`,{
+        method: "POST",
+        credentials: "include"
+      })
+      const result = await response.json()
+      if(response.ok){
+        setError("")
+        setMessage(result.message)
+        setTimeout(() => {
+          setMessage("")
+          navigate("/purchased")
+        }, 2000);
+      }else{
+        setError(result.message)
+        setTimeout(() => {
+          setError("")
+        }, 2000);
+      }
+    }catch(err){
+      setError(err)
+    }
+    }
+ 
+ 
   
   return (
     <>
+    {message && (
+        <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto py-5 rounded-2xl text-white text-center text-2xl">
+          {message}
+        </div>
+      )}
     <div className='bg-blue-800 w-full p-14 '>
      <h1 className='text-white text-4xl '>Complete Web Development + <br /> Devops + Blockchain Cohort</h1>
     </div>

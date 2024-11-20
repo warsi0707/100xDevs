@@ -87,16 +87,15 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
     const { coursId } = req.params; //req course id from the params
     const  id  = req.user
     try {
-        const foundCourse = await User.findById(coursId).populate("purchased")
-       
-        console.log(foundCourse)
+        // const foundCourse = await User.findById(coursId).populate("purchased")
+        const foundCourse = await User.findOne({
+            _id:id, 
+            purchased: {$in: [coursId]}})
         if(foundCourse){
             return res.status(404).json({
                 message: "You have already bought this course"
             })
         }
-        const  id  = req.user //req userid from the cookies middleware
-        console.log(id)
         const user = await User.findById(id) //find the user id in db.
         if (!user) {
             return res.json({
@@ -117,10 +116,8 @@ userRouter.post("/buy/:coursId", userAuth, async (req, res) => {
 })
 userRouter.get("/courses", userAuth, async (req, res) => {
     const  id  = req.user // calling user id from the cookies
-    console.log(id)
     try {
         const user = await User.findById(id).populate("purchased") //inside user model find the user with the id and users purchases table
-        console.log(user)
         if(!user){
             return res.status(404).json({
                 message: "User not found, please login"
