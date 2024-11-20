@@ -45,7 +45,7 @@ export default function Course() {
                 <p className='text-green-500 font-bold'>16% off</p>
             </div>
             <div className="btn mt-5">
-              <a href={`/course/${item._id}`}>
+              <a href={`/#course/${item._id}`}>
               <button className='bg-blue-600 w-full rounded-3xl py-2 text-lg text-white mb-2 hover:bg-blue-800 delay-200'>View Details</button>
               </a>
                 
