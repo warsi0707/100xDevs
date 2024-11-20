@@ -47,7 +47,7 @@ export default function Signin() {
 }
   return (
     <>
-     <div className=" absolute left-1/3">
+     <div className=" md:absolute left-1/3">
    
     {message && (
         <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto py-5 rounded-2xl text-white text-center text-2xl">
