@@ -12,7 +12,7 @@ import Course from './components/home/Course';
 
 export default function App() {
   return (
-    <Router>
+    <HashRouter>
       <AuthProvider>
       <Navbar/>
       <Routes>
@@ -26,6 +26,6 @@ export default function App() {
      
       </AuthProvider>
    
-    </Router>
+    </HashRouter>
   )
 }
