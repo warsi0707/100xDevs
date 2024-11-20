@@ -25,6 +25,7 @@ export default function Purchased() {
  
   return (
     <>
+    {courses.length ===0 ? <h1 className='text-black mt-10 text-center text-2xl h-screen'>No Course Purchased...</h1>: <>
     <div className='m-0 space-y-10 md:space-y-0 md:grid sm:grid-cols-1 md:grid-cols-3 md:gap-5 pt-10'>
     {courses.map((course) =>(
       <div key={course._id} className='w-96 p-0 text-black mx-auto rounded-xl border-2 border-gray-300'>
@@ -43,7 +44,10 @@ export default function Purchased() {
      ))}
 
     </div>
-    <Footer/>
+    </>}
+
+   <Footer/>
+
     </>
   )
 }

@@ -31,7 +31,13 @@ export default function Navbar() {
         }
       );
       const result = await response.json();
-      console.log(result);
+      if(response.ok){
+        setMessage(result.message)
+        setTimeout(() => {
+          setMessage("")
+          navigate("/")
+        }, 2000);
+      }
       if (response.ok) {
         setIsAuthenticated(false);
         setMessage(result.message);
@@ -127,6 +133,11 @@ export default function Navbar() {
       
       {signup?<Signup/>: ""}
       {signin? <Signin/>: ""}
+      {message && (
+        <div className="bg-green-500 my-2 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-3 mx-auto py-5 rounded-2xl text-black text-center text-2xl">
+          {message}
+        </div>
+      )}
     </>
   );
 }

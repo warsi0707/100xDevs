@@ -61,8 +61,13 @@ export default function DetailC() {
   return (
     <>
     {message && (
-        <div className="bg-green-500 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-5 mx-auto py-5 rounded-2xl text-white text-center text-2xl">
+        <div className="bg-green-500 my-2 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-3 mx-auto py-5 rounded-2xl text-black text-center text-2xl">
           {message}
+        </div>
+      )}
+      {error && (
+        <div className="bg-red-500 my-2 w-[350px] px-2 sm:w-[500px] md:w-[500px] p-3 mx-auto py-5 rounded-2xl text-black text-center text-2xl">
+          {error}
         </div>
       )}
     <div className='bg-blue-800 w-full p-14 '>
